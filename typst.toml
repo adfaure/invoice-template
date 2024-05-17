@@ -1,0 +1,8 @@
+[package]
+name = "invoice"
+version = "0.0.1"
+entrypoint = "invoice.typ"
+authors = [ "Adrien Faure" ]
+license = "MIT"
+description = ""
+repository = ""
