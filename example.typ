@@ -1,4 +1,4 @@
-#import "@local/invoice:0.0.1" : invoice
+#import "invoice.typ" : invoice
 
 #let my-information = (
   name: [John Doe],
