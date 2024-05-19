@@ -43,7 +43,7 @@
   )
 }
 
-#let footer(info, bank-account) = {
+#let footer(info, bank-account, conditions) = {
   [
     #strong[#localize("coordonees_bancaires")] \
     #strong[#localize("titulaire_du_compte"):] #bank-account.account-owner \
@@ -52,7 +52,7 @@
     #strong[#localize("code_bic"):] #bank-account.bic \
 
     #set text(size: 12pt)
-    #emph[#info.conditions]
+    #emph[#conditions]
   ]
 }
 
@@ -101,7 +101,7 @@
   ]
 }
 
-#let invoice(title, user-info, bank-account, client-info, month, body, lang: "fr") = {
+#let invoice(title, user-info, bank-account, client-info, month, conditions, body, lang: "fr") = {
   let today = datetime.today()
   set page(
     paper: "a4",
@@ -125,6 +125,6 @@
   ]
 
   block(breakable: false)[
-    #footer(user-info, bank-account)
+    #footer(user-info, bank-account, conditions)
   ]
 }
