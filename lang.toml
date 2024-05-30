@@ -23,6 +23,7 @@ date = "Date"
 n_client = "Client number"
 intitule = "Title"
 temps = "Time"
+293b_vat = "VAT not applicable, article 293 B of the French General Tax Coder"
 
 [lang.fr]
 facture="facture"
@@ -46,3 +47,4 @@ date="Date"
 n_client="N° client"
 intitule="Intitulé"
 temps="Temps"
+293b_vat = "TVA non applicable, art. 293 B du CGI"

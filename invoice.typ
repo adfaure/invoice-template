@@ -43,15 +43,21 @@
   )
 }
 
-#let footer(info, bank-account, conditions) = {
+#let footer(info, bank-account, conditions, vat_non_applicable: false) = {
+
+  if vat_non_applicable {
+    [
+      #localize("293b_vat") \ ]
+  } else {
+  }
+
   [
     #strong[#localize("coordonees_bancaires")] \
     #strong[#localize("titulaire_du_compte"):] #bank-account.account-owner \
     #strong[#localize("banque"):] #bank-account.bank-address \
     #strong[#localize("iban"):] #bank-account.iban \
-    #strong[#localize("code_bic"):] #bank-account.bic \
+    #strong[#localize("code_bic"):] #bank-account.bic
 
-    #set text(size: 12pt)
     #emph[#conditions]
   ]
 }
@@ -101,13 +107,13 @@
   ]
 }
 
-#let invoice(title, user-info, bank-account, client-info, month, conditions, body, lang: "fr") = {
+#let invoice(title, user-info, bank-account, client-info, month, conditions, body, lang: "fr", vat_non_applicable: false) = {
   let today = datetime.today()
   set page(
     paper: "a4",
     margin: (x: 4%, top: 2%, bottom: 2%),
   )
-  set text(size: 13pt)
+  set text(size: 12pt)
   header(user-info, client-info)
 
   line(length: 100%)
@@ -125,6 +131,6 @@
   ]
 
   block(breakable: false)[
-    #footer(user-info, bank-account, conditions)
+    #footer(user-info, bank-account, conditions, vat_non_applicable: vat_non_applicable)
   ]
 }
