@@ -3,6 +3,7 @@ default-lang = "fr"
 
 [lang.en]
 facture = "invoice"
+devis="quotation"
 coordonees_bancaires = "Bank details"
 titulaire_du_compte = "Account holder"
 banque = "Bank"
@@ -27,6 +28,7 @@ temps = "Time"
 
 [lang.fr]
 facture="facture"
+devis="devis"
 coordonees_bancaires="Coordonnées bancaires"
 titulaire_du_compte="Titulaire du compte"
 banque="Banque"
