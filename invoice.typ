@@ -64,19 +64,26 @@
   ]
 }
 
-#let details_from_csv = (data, tjm) => {
+#let details_from_csv = (data, tjm, time_format: "comma", hide_price: false) => {
   // Parse the data
   // let data = csv(data, delimiter: ";")
   let data = data.slice(1)
 
+  let parse_date
+  if time_format == "comma" {
+    parse_date="(\d+):(\d+)"
+  } else {
+    parse_date="(\d+)h[ ]?(\d+)m"
+  }
+
   // Compute the total time in minutes
   let total-minutes = data.map(
-    ((date, time, title)) => time.match(regex("((\d+)h[ ])?(\d+)m"))
-  ).filter((cpt) => cpt != none).map(capture => if capture.captures.at(1) != none {
-      int(capture.captures.at(1)) * 60 + int(capture.captures.at(2))
+    ((date, time, title)) => time.match(regex(parse_date))
+  ).filter((cpt) => cpt != none).map(capture => if capture.captures.at(0) != none {
+      int(capture.captures.at(0)) * 60 + int(capture.captures.at(1))
     }
     else {
-      int(capture.captures.at(2))
+      int(capture.captures.at(1))
     }
   ).fold(0, (acc, minutes) => acc + minutes)
 
@@ -99,14 +106,15 @@
       ..data.flatten(),
     )
     #localize("pour_un_total") #hours\h #localize("et") #minutes\m.
-
-    #table(
+  ]
+  if hide_price == false {
+    table(
       columns: (auto, 1fr, auto, auto),
       align: horizon,
       [ #localize("quantite") ], [#localize("designation")], [#localize("prix_unitaire_ht")], [#localize("prix_total_ht")],
       [ #hours\h #minutes\m ], [ #localize("taux_journalier_moyen") ], [ #tjm € ], [ #calc.round(total, digits: 2) €]
     )
-  ]
+  }
 }
 
 #let invoice(
