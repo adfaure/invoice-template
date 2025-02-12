@@ -73,17 +73,20 @@
   if time_format == "comma" {
     parse_date="(\d+):(\d+)"
   } else {
-    parse_date="(\d+)h[ ]?(\d+)m"
+    parse_date="^(?:(\d+)h)?[ ]?(?:(\d+)m)?$"
   }
 
   // Compute the total time in minutes
   let total-minutes = data.map(
     ((date, time, title)) => time.match(regex(parse_date))
-  ).filter((cpt) => cpt != none).map(capture => if capture.captures.at(0) != none {
+  ).filter((cpt) => cpt != none).map(capture => 
+    if capture.captures.at(0) != none and capture.captures.at(1) != none {
       int(capture.captures.at(0)) * 60 + int(capture.captures.at(1))
     }
-    else {
+    else if capture.captures.at(1) != none {
       int(capture.captures.at(1))
+    } else if capture.captures.at(0) != none {
+      int(capture.captures.at(0)) * 60
     }
   ).fold(0, (acc, minutes) => acc + minutes)
 
